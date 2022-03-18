@@ -4,64 +4,30 @@ The Main Module of the project.
 """
 #import [Module/Package]
 import logging
-from random import randint as roll
+from logging.handlers import TimedRotatingFileHandler
+
+from src.character import Character
 
 # LOGGER SETUP
 logging.basicConfig(filename='scriptlogs.txt', level=logging.WARN)
+TRFH = TimedRotatingFileHandler('scriptlogs.txt', when='midnight')
 
-# MODULE METHODS
-class Character:
-	"""<Class "dark_souls_tabletop_character_tool/main/Character(object)"
-	"""
-	def __init__(self):
-		"""<Method "dark_souls_tabletop_character_tool/main.Character(object).__init__()">
-		Description:
-		Creates an instance of the Character() class.
-		"""
-		#? This internal function exists solely to add to the readability of __init__()
-		logging.info('A new instance of <Class "main.Character(object)"> is being created!')
-		def _stat_roll():
-			return roll(1, 6) + roll(1, 6) + 12
-		self.attunement = _stat_roll()
-		logging.debug('Attunement Determined...')
-		self.dexterity = _stat_roll()
-		logging.debug('Dexterity Determined...')
-		self.endurance= _stat_roll()
-		logging.debug('Endurance Determined...')
-		self.faith = _stat_roll()
-		logging.debug('Faith Determined...')
-		self.intelligence = _stat_roll()
-		logging.debug('Intelligence Determined...')
-		self.strength = _stat_roll()
-		logging.debug('Strength Determined...')
-		self.vitality = _stat_roll()
-		logging.debug('Vitality Determined...')
-		logging.debug('Instance initialization completed successfully.')
-	def __str__(self):
-		"""<Method "dark_souls_tabletop_character_tool/main.Character(object).__str__()">
-		Description:
-		This method handles the printability of the class and its attributes.
-		"""
-		logging.info('<Class "main.Character(object)"> is being printed as a string...')
-		_stats = (f'Attunememt: {self.attunement} (AB +{str(self.attunement)[0]})',
-			f'Dexterity: {self.dexterity} (DB +{str(self.dexterity)[0]})',
-			f'Endurance: {self.endurance} (EB +{str(self.endurance)[0]})',
-			f'Faith: {self.faith} (FB +{str(self.faith)[0]})',
-			f'Intelligence: {self.intelligence} (IB +{str(self.intelligence)[0]})',
-			f'Strength: {self.strength} (SB +{str(self.strength)[0]})',
-			f'Vitality: {self.vitality} (VB +{str(self.vitality)[0]})')
-		_output = '\n'.join(_stats)
-		logging.debug('main.character(object).__str__() completed successfully.')
-		return _output
-
+# MAIN METHOD
 def main():
 	"""<Method "dark_souls_tabletop_character_tool/main.main()">
 	Description:
 	This method contains the main logic when this module is run directly.
 	"""
-	_test_char = Character()
-	print('Generating Dark Souls Character...\n')
-	print(_test_char)
+	_mode = input('What mode do you want to generate this character in?\n\n1. Manual\n2. Random\n\n')
+	if not isinstance(_mode, str):
+		logging.warn('Invalid type provided for _mode.')
+	if _mode[0] == '1' or _mode.lower() == 'manual':
+		_test_char = Character(mode='manual')
+	elif _mode[0] == '2' or _mode.lower() == 'random':
+		_test_char = Character()
+	
+	print('Generating Dark Souls Character...', _test_char, sep='\n')
+
 
 # DRIVER CODE
 if __name__ == '__main__':
