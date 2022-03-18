@@ -7,6 +7,9 @@ import logging
 from logging.handlers import TimedRotatingFileHandler
 from random import randint as roll
 
+from ..utils import acknowledge_import
+
+
 # LOGGER SETUP
 logging.basicConfig(filename='scriptlogs.txt', level=logging.WARN)
 TRFH = TimedRotatingFileHandler('scriptlogs.txt', when='midnight')
@@ -166,4 +169,4 @@ def main():
 if __name__ == '__main__':
 	main()
 else:
-	print(f'{__name__} has been successfully imported.')
+	acknowledge_import()
