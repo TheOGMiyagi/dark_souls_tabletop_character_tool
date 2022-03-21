@@ -69,6 +69,8 @@ class Character:
 			logging.debug('Vitality Determined Randomly...')
 		#? Regardless of the provided mode of initialization, the logger will confirm it was succeasful.
 		logging.debug('Instance initialization completed successfully.')
+		self._estus_uses = 5
+
 	def __str__(self):
 		"""<Method "dark_souls_tabletop_character_tool/src/character/base_class.Character(object).__str__()">
 		Description:
@@ -86,6 +88,7 @@ class Character:
 		_output = '\n'.join(_stats)
 		logging.debug('main.character(object).__str__() completed successfully.')
 		return _output
+	
 	#* ATTUNEMENT
 	@property
 	def attunement_bonus(self):
@@ -121,6 +124,7 @@ class Character:
 	def vitality_bonus(self):
 		_stat = str(self.vitality)
 		return int(_stat[0])
+	#* LEVEL
 	@property
 	def level(self):
 		"""<Property "dark_souls_tabletop_character_tool/src/character/base_class.Character(object).level">
@@ -138,6 +142,22 @@ class Character:
 		for _ in _values:
 			_level = _level + _
 		return _level
+	#* ESTUS USES
+	@property
+	def estus(self):
+		return self._estus_uses
+	@estus.setter
+	def estus(self, num):
+		if num > 5:
+			_estus_uses = 5
+		elif num <= 0:
+			_estus_uses = 0
+		else:
+			_estus_uses = num
+	@estus.deleter
+	def estus(self):
+		_estus_uses = 0
+
 
 def main():
 	"""<Method "dark_souls_tabletop_character_tool/src/character/base_class.main()">
